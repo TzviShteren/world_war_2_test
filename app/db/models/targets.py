@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from app.db.models import Base
-from app.db.models import Mission, City
 
 
 class Target(Base):
@@ -16,5 +15,4 @@ class Target(Base):
 
     target_type = relationship("TargetType", back_populates="targets")
     city = relationship("City", back_populates="targets")
-    country = relationship("Country", back_populates="targets")
     mission = relationship("Mission", back_populates="targets")

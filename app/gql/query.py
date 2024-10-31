@@ -21,33 +21,39 @@ class Query(ObjectType):
     mission_by_target_industry = List(TargetsType, target_industry=String())
 
     # query 5 (I didn't do the task, because it doesn't make sense)
-    #aircraft_by_mission = List(MissionType, aircraft_mission=String())
+    # aircraft_by_mission = List(MissionType, aircraft_mission=String())
 
     # query 6
-
 
     @staticmethod
     def resolve_mission_by_id(root, info, mission_id):
         with session_maker() as session:
-            return (session.query(Mission)
-                    .filter(Mission.mission_id == mission_id)
-                    .first())
+            return session.get(Mission, mission_id)
 
     @staticmethod
     def resolve_mission_by_date_range(root, info, start_date, end_date):
+        if start_date < end_date:
+            return None
         with session_maker() as session:
-            return (session.query(Mission)
-                    .filter(Mission.mission_date >= start_date and
-                            Mission.mission_date <= end_date
-                            )
-                    .all())
+            return (
+                session.query(Mission)
+                .filter(
+                    Mission.mission_date >= start_date,
+                    Mission.mission_date <= end_date
+                )
+                .all()
+            )
 
     @staticmethod
     def resolve_mission_by_country(root, info, country):
         with session_maker() as session:
-            return (session.query(Target)
-                    .filter(Target.city.country.country_name == country)
-                    .all())
+            return (
+                session.query(Target)
+                .filter(
+                    Target.city.country.country_name == country
+                )
+                .all()
+            )
 
     @staticmethod
     def resolve_mission_by_target_industry(root, info, target_industry):

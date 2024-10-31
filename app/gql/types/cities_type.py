@@ -1,7 +1,7 @@
 from graphene import ObjectType, Int, String, List, Date, Field, Float
 
 from app.db.database import session_maker
-from app.db.models.cities import City
+from app.db.models.city import City
 
 
 class CityType(ObjectType):
