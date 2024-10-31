@@ -1,6 +1,6 @@
 from graphene import ObjectType, List, Field, Int, String, Date
 
-from app.db.models import Mission, Target
+from app.db.models import Mission, Target, TargetType
 from app.gql.types.missions_type import MissionType
 from app.gql.types.targets_type import TargetsType
 from app.gql.types.cities_type import City
@@ -26,6 +26,7 @@ class Query(ObjectType):
     # aircraft_by_mission = List(MissionType, aircraft_mission=String())
 
     # query 6
+    mission_by_target_type = List(MissionType, target_type=String())
 
     @staticmethod
     def resolve_mission_by_id(root, info, mission_id):
@@ -64,3 +65,14 @@ class Query(ObjectType):
             return (session.query(Mission)
                     .filter(Target.target_industry == target_industry)
                     .all())
+
+    @staticmethod
+    def resolve_mission_by_target_type(root, info, target_type):
+        with session_maker() as session:
+            return (
+                session.query(Mission)
+                .join(Target)
+                .join(TargetType)
+                .filter(TargetType.target_type_name == target_type)
+                .all()
+            )

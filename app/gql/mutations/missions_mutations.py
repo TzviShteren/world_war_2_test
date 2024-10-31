@@ -1,4 +1,4 @@
-from graphene import Mutation, Int, Float, Boolean, Field, InputObjectType, Date
+from graphene import Mutation, Int, String, Boolean, Field, InputObjectType, Date, Float
 
 from app.db.database import session_maker
 from app.db.models import Mission
@@ -30,7 +30,6 @@ class CreateMission(Mutation):
             inserted_mission = Mission(**user_input)
             session.add(inserted_mission)
             session.commit()
-            session.refresh(inserted_mission)
             return CreateMission(success=True)
 
 

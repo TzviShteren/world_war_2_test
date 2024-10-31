@@ -1,11 +1,10 @@
 from flask import Flask
 from app.gql.query import Query
-# from app.gql.mutation import Mutation
+from app.gql.mutation import Mutation
 from graphene import Schema
 from flask_graphql import GraphQLView
 
-# , mutation=Mutation
-schema = Schema(query=Query)
+schema = Schema(query=Query, mutation=Mutation)
 
 app = Flask(__name__)
 
