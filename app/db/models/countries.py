@@ -5,6 +5,9 @@ from app.db.models import Base
 
 class Country(Base):
     __tablename__ = 'countries'
-    id = Column(Integer, primary_key=True)
-    country_id = Column(Integer)
-    country_name = Column(String)
+    country_id = Column(Integer, primary_key=True, autoincrement=True)
+    country_name = Column(String, nullable=False)
+
+    cities = relationship("City", back_populates="country")
+
+    targets = relationship("Target", back_populates="country")
