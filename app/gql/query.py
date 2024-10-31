@@ -3,6 +3,8 @@ from graphene import ObjectType, List, Field, Int, String, Date
 from app.db.models import Mission, Target
 from app.gql.types.missions_type import MissionType
 from app.gql.types.targets_type import TargetsType
+from app.gql.types.cities_type import City
+from app.gql.types.countries_type import Country
 
 from app.db.database import session_maker
 
@@ -15,7 +17,7 @@ class Query(ObjectType):
     mission_by_date_range = List(MissionType, start_date=Date(), end_date=Date())
 
     # query 3
-    mission_by_country = List(TargetsType, country=String())
+    mission_by_country = List(MissionType, country=String())
 
     # query 4
     mission_by_target_industry = List(TargetsType, target_industry=String())
@@ -48,10 +50,11 @@ class Query(ObjectType):
     def resolve_mission_by_country(root, info, country):
         with session_maker() as session:
             return (
-                session.query(Target)
-                .filter(
-                    Target.city.country.country_name == country
-                )
+                session.query(Mission)
+                .join(Target)
+                .join(City)
+                .join(Country)
+                .filter(Country.country_name == country)
                 .all()
             )
 
