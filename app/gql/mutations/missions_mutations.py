@@ -19,15 +19,15 @@ class MissionInput(InputObjectType):
 
 class CreateMission(Mutation):
     class Arguments:
-        user_input = MissionInput()
+        mission_input = MissionInput()
 
     success = Boolean()
     mission = Field(MissionType)
 
     @staticmethod
-    def mutate(root, info, user_input):
+    def mutate(root, info, mission_input):
         with session_maker() as session:
-            inserted_mission = Mission(**user_input)
+            inserted_mission = Mission(**mission_input)
             session.add(inserted_mission)
             session.commit()
             return CreateMission(success=True)

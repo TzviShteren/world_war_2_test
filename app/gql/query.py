@@ -20,7 +20,7 @@ class Query(ObjectType):
     mission_by_country = List(MissionType, country=String())
 
     # query 4
-    mission_by_target_industry = List(TargetsType, target_industry=String())
+    mission_by_target_industry = List(MissionType, target_industry=String())
 
     # query 5 (I didn't do the task, because it doesn't make sense)
     # aircraft_by_mission = List(MissionType, aircraft_mission=String())
