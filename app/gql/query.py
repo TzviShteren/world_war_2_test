@@ -2,7 +2,6 @@ from graphene import ObjectType, List, Field, Int, String, Date
 
 from app.db.models import Mission, Target, TargetType
 from app.gql.types.missions_type import MissionType
-from app.gql.types.targets_type import TargetsType
 from app.gql.types.cities_type import City
 from app.gql.types.countries_type import Country
 
