@@ -4,4 +4,6 @@ from app.db.database import session_maker
 from app.db.models.countries import Country
 
 class CountryType(ObjectType):
-    id = Int(required=True)
+    country_id = Int(required=True)
+    country_name = String()
+
