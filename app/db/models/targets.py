@@ -1,13 +1,19 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship
+from app.db.models import Base
+from app.db.models import Mission, City
 
 
 class Target(Base):
     __tablename__ = 'targets'
     id = Column(Integer, primary_key=True)
-    target_id = Column(Integer, ForeignKey('targets.id'))
+    target_id = Column(Integer)
     mission_id = Column(Integer, ForeignKey('missions.id'))
     target_industry = Column(String)
-    city_id = Column(Integer, ForeignKey('citys.id'))
-    target_type_id = Column(Integer, ForeignKey('target_types.id'))
+    city_id = Column(Integer, ForeignKey('cities.city_id'))
+    target_type_id = Column(Integer, ForeignKey('target_types.target_type_id'))
     target_priority = Column(Integer)
+
+    mission = relationship('Mission', back_populates='targets')
+    target_type = relationship('TargetType', back_populates='targets')
+    city = relationship('City', back_populates='targets')
